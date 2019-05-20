@@ -3,7 +3,7 @@ Four Machine_learning_methods_for_spectrum_sensing
 
 
 
-The provided codes are developed firstly in  in the winter of 2018
+The provided codes are developed firstly in the summer of 2018
 
 
 test.py includes: GBM,SVM,and SVM based spectrum_sensing methods;
@@ -11,7 +11,7 @@ test.py includes: GBM,SVM,and SVM based spectrum_sensing methods;
 test0.py includes a basic LSTM based  spectrum_sensing methods;
 
 
-If you get any question for our codes, please contact: leochu@sjtu.edu.cn or uestcahcl@gmail.com;
+If you get any question for our codes, please contact: uestcahcl@gmail.com;
 
 We are glad to help you in spectrum sensing using macheine learning methods.
 
