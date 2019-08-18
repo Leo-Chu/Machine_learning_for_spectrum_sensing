@@ -11,8 +11,9 @@ from keras.utils import np_utils
 from keras.models import Sequential
 from keras.layers.recurrent import LSTM
 from keras.layers import Dense
-
-
+from keras.layers.normalization import BatchNormalization
+import math
+from keras.callbacks import LearningRateScheduler
 
 def makedata():
     dataX, labelX =  load_train_data()
@@ -41,13 +42,20 @@ def buildlstm():
     num_classes = 2
 
     model = Sequential()
-    model.add(LSTM(32, return_sequences=True,   input_shape=(timesteps, data_dim)))   
-    model.add(LSTM(32, return_sequences=True))  
+    
+    model.add(LSTM(128, return_sequences=True,   input_shape=(timesteps, data_dim)))   
+#    model.BN()
+    model.add(BatchNormalization())
+    model.add(LSTM(64, return_sequences=True))  
+#    model.BN()
+    model.add(BatchNormalization())
     model.add(LSTM(32))  
+    model.add(BatchNormalization())
+#    model.BN()
     model.add(Dense(num_classes, activation='softmax'))
-
+    
     model.compile(loss='categorical_crossentropy',
-                  optimizer='rmsprop',
+                  optimizer='adam', # rmsprop
                   metrics=['accuracy'])
 #    print model.summary()
     return  model
@@ -55,10 +63,19 @@ def buildlstm():
 def runTrain(model, x_train, x_test, y_train, y_test):
     print('Start Training!')
 
-    model.fit(x_train, y_train, nb_epoch = 1000, batch_size = 10) # ,shuffle=True
+    
+#    def step_decay(epoch):
+#        initial_lrate = 0.01
+#        drop = 0.75
+#        epochs_drop = 100.0
+#        lrate = initial_lrate * math.pow(drop,math.floor((1+epoch)/epochs_drop))
+#        return lrate
+#    lrate = LearningRateScheduler(step_decay)
+#    model.fit(x_train, y_train, nb_epoch= 2000, batch_size=32, callbacks=[lrate])
+    model.fit(x_train, y_train, nb_epoch = 100, batch_size = 32) # ,shuffle=True
     print('Training is over and Start to Test!')
-    score = model.evaluate(x_test, y_test, batch_size = 10)
-    print('Test accuracy:', score[1])
+    score = model.evaluate(x_test, y_test, batch_size = 32)
+    print('Test accuracy of LSTM is:', score[1])
    
 
 def test():
