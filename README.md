@@ -6,7 +6,7 @@ Four Machine_learning_methods_for_spectrum_sensing
 The provided codes are developed firstly in the summer of 2018
 
 
-test.py includes: GBM,SVM,and SVM based spectrum_sensing methods;
+test.py includes: GBM, Random Forest (RF),and SVM based spectrum_sensing methods;
 
 test0.py includes a basic LSTM based  spectrum_sensing methods;
 
